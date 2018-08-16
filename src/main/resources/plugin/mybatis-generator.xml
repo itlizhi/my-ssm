@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--
+    运行
+    mvn mybatis-generator:generate
+    -->
+    <properties resource="jdbc.properties"/>
+    <!--
+
+        1，conditional：类似hierarchical 默认
+        2，flat：所有内容（主键，blob）等全部生成在一个对象中；
+        3，hierarchical：主键生成一个XXKey对象(key class)，Blob等单独生成一个对象，其他简单属性在一个对象中(record class)
+    targetRuntime:
+        1，MyBatis3：默认的值，生成基于MyBatis3.x以上版本的内容，包括XXXBySample；
+        2，MyBatis3Simple：类似MyBatis3，只是不生成XXXBySample；
+    introspectedColumnImpl：类全限定名，用于扩展MBG
+-->
+    <context id="generatorTables" defaultModelType="conditional" targetRuntime="MyBatis3">
+
+        <!--避免中文乱码-->
+        <property name="javaFileEncoding" value="UTF-8"/>
+
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
+        <!--fix 使用 mybatis-generator-maven-plugin 重复生成代码时, xml 文件不会覆盖, 而是每次累加.-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
+
+        <!-- 查询单条数据插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.SelectOneByExamplePlugin"/>
+
+        <!-- example 目标包修改插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleTargetPlugin">
+            <!-- 修改Example类生成到目标包下 -->
+            <property name="targetPackage" value="com.enreach.ssm.entity.example"/>
+        </plugin>
+
+        <!-- 自定义注释插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.CommentPlugin">
+            <!-- 自定义模板路径 -->
+            <property name="template" value="src/main/resources/plugin/mybatis-generator-comment.ftl"/>
+        </plugin>
+
+
+        <commentGenerator>
+            <property name="suppressDate" value="false"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库连接配置 -->
+        <jdbcConnection driverClass="${jdbc.driver}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+
+        <!-- java类型调整，此处并不强制使用BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 模型类生成配置，targetPackage为生成后文件的目录 -->
+        <javaModelGenerator targetPackage="com.enreach.ssm.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- XXXMapper.xml生成配置，targetPackage为生成后文件的目录 -->
+        <sqlMapGenerator targetPackage="resources.mapper" targetProject="src/main/">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- Mapper接口即XXXMapper.java生成配置，targetPackage为生成后文件的目录 -->
+        <!--
+            1，ANNOTATEDMAPPER：会生成使用Mapper接口+Annotation的方式创建（SQL生成在annotation中），不会生成对应的XML；
+            2，MIXEDMAPPER：使用混合配置，会生成Mapper接口，并适当添加合适的Annotation，但是XML会生成在XML中；
+            3，XMLMAPPER：会生成Mapper接口，接口完全依赖XML；
+        -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.enreach.ssm.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 表的配置 -->
+        <table schema="my-blog" tableName="t_article">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+            <domainObjectRenamingRule searchString="^t_" replaceString=""/>
+        </table>
+
+
+
+    </context>
+</generatorConfiguration>
