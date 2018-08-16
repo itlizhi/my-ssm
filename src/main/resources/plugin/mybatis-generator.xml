@@ -24,6 +24,8 @@
         <!--避免中文乱码-->
         <property name="javaFileEncoding" value="UTF-8"/>
 
+        <!--region 插件-->
+
         <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
         <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
@@ -45,6 +47,20 @@
             <property name="template" value="src/main/resources/plugin/mybatis-generator-comment.ftl"/>
         </plugin>
 
+        <!-- 逻辑删除插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.LogicalDeletePlugin">
+            <!-- 这里配置的是全局逻辑删除列和逻辑删除值，当然在table中配置的值会覆盖该全局配置 -->
+            <!-- 逻辑删除列类型只能为数字、字符串或者布尔类型 -->
+            <property name="logicalDeleteColumn" value="isDelete"/>
+            <!-- 逻辑删除-已删除值 -->
+            <property name="logicalDeleteValue" value="1"/>
+            <!-- 逻辑删除-未删除值 -->
+            <property name="logicalUnDeleteValue" value="1"/>
+        </plugin>
+
+        <!--endregion-->
+
+        <!--region 核心设定-->
 
         <commentGenerator>
             <property name="suppressDate" value="false"/>
@@ -57,6 +73,12 @@
                         connectionURL="${jdbc.url}"
                         userId="${jdbc.username}"
                         password="${jdbc.password}">
+
+            <!--设置可以获取tables remarks信息-->
+            <property name="useInformationSchema" value="true"/>
+            <!--设置可以获取remarks信息-->
+            <property name="remarks" value="true"/>
+
         </jdbcConnection>
 
         <!-- java类型调整，此处并不强制使用BigDecimal -->
@@ -85,13 +107,20 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <!-- 表的配置 -->
+
+        <!--endregion -->
+
+        <!--region 表的配置 -->
         <table schema="my-blog" tableName="t_article">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-            <domainObjectRenamingRule searchString="^t_" replaceString=""/>
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="articleID" sqlStatement="JDBC" identity="true"/>
+            <domainObjectRenamingRule searchString="^T" replaceString=""/>
         </table>
 
 
+        <!--endregion-->
 
     </context>
+
+
 </generatorConfiguration>

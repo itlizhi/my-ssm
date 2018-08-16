@@ -19,17 +19,17 @@ public class ArticleDaoTest {
 
 
     @Test
-    public void insert() {
+    public void testInsert() {
 
         Article article = new Article();
-        article.setTitle("no5");
+        article.setTitle("no7");
         article.setCreateTime(new Date());
         article.setCreator("lizhi");
         article.setContext("Mybatis-generator(MBG)是Mybatis官网发布的一个用来生成代码的一个工具包，他可以对一些简单的CRUD应用进行快速的生成POJO对象和对应的Mapper接口文件及XML配置文件，大大的减少了手写的误差和工作量");
 
-        articleMapper.insert(article);
+        articleMapper.insertSelective(article);
 
-        System.out.println(article.getId());
+        System.out.println(article.getArticleId());
 
     }
 
@@ -37,12 +37,14 @@ public class ArticleDaoTest {
     public void testExample() {
 
         ArticleExample example = new ArticleExample();
-        example.createCriteria().andTitleLike("%no%");
-        example.setOrderByClause("id desc");
+        example.createCriteria().andTitleLike("%no%").andIsDeleteEqualTo(false);
+        example.setOrderByClause("articleId desc");
 
         Article article = articleMapper.selectOneByExampleWithBLOBs(example);
 
         System.out.println(article);
+
+        articleMapper.logicalDeleteByPrimaryKey(1);
 
         // articleMapper.selectMore();
     }
