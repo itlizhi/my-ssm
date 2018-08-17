@@ -19,46 +19,21 @@
         2，MyBatis3Simple：类似MyBatis3，只是不生成XXXBySample；
     introspectedColumnImpl：类全限定名，用于扩展MBG
 -->
-    <context id="generatorTables" defaultModelType="conditional" targetRuntime="MyBatis3">
+    <context id="generatorTables" defaultModelType="flat" targetRuntime="MyBatis3Simple">
 
         <!--避免中文乱码-->
         <property name="javaFileEncoding" value="UTF-8"/>
 
-        <!--region 插件-->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
 
-        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.enreach.ssm.util.IMapper"/>
+            <property name="caseSensitive" value="true"/>
+        </plugin>
+
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
-        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
-        <!--fix 使用 mybatis-generator-maven-plugin 重复生成代码时, xml 文件不会覆盖, 而是每次累加.-->
-        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
-
-        <!-- 查询单条数据插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.SelectOneByExamplePlugin"/>
-
-        <!-- example 目标包修改插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleTargetPlugin">
-            <!-- 修改Example类生成到目标包下 -->
-            <property name="targetPackage" value="com.enreach.ssm.entity.example"/>
-        </plugin>
-
-        <!-- 自定义注释插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.CommentPlugin">
-            <!-- 自定义模板路径 -->
-            <property name="template" value="src/main/resources/plugin/mybatis-generator-comment.ftl"/>
-        </plugin>
-
-        <!-- 逻辑删除插件 -->
-        <plugin type="com.itfsw.mybatis.generator.plugins.LogicalDeletePlugin">
-            <!-- 这里配置的是全局逻辑删除列和逻辑删除值，当然在table中配置的值会覆盖该全局配置 -->
-            <!-- 逻辑删除列类型只能为数字、字符串或者布尔类型 -->
-            <property name="logicalDeleteColumn" value="isDelete"/>
-            <!-- 逻辑删除-已删除值 -->
-            <property name="logicalDeleteValue" value="1"/>
-            <!-- 逻辑删除-未删除值 -->
-            <property name="logicalUnDeleteValue" value="1"/>
-        </plugin>
-
-        <!--endregion-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
 
         <!--region 核心设定-->
 
@@ -86,15 +61,14 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <!-- 模型类生成配置，targetPackage为生成后文件的目录 -->
+        <!-- MyBatis 生成器只需要生成 Model 其他的用插件 -->
         <javaModelGenerator targetPackage="com.enreach.ssm.entity" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <!-- XXXMapper.xml生成配置，targetPackage为生成后文件的目录 -->
-        <sqlMapGenerator targetPackage="resources.mapper" targetProject="src/main/">
-            <property name="enableSubPackages" value="true"/>
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
         </sqlMapGenerator>
 
         <!-- Mapper接口即XXXMapper.java生成配置，targetPackage为生成后文件的目录 -->
@@ -104,16 +78,14 @@
             3，XMLMAPPER：会生成Mapper接口，接口完全依赖XML；
         -->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.enreach.ssm.dao" targetProject="src/main/java">
-            <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-
 
         <!--endregion -->
 
         <!--region 表的配置 -->
         <table schema="my-blog" tableName="t_article">
             <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="articleID" sqlStatement="JDBC" identity="true"/>
+            <generatedKey column="articleId" sqlStatement="JDBC" identity="true"/>
             <domainObjectRenamingRule searchString="^T" replaceString=""/>
         </table>
 

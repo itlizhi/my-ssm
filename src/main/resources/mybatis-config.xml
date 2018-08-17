@@ -17,8 +17,10 @@
 
         <!--使用列别名替换别名　　默认true-->
         <setting name="useColumnLabel" value="true"/>
+
         <!--开启驼峰命名转换Table:create_time到 Entity(createTime)-->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+
     </settings>
 
     <!--注册别名，将类名作为别名-->
