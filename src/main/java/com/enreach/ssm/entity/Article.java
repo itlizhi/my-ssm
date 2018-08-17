@@ -4,23 +4,29 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "t_article")
+@Table(name = "`t_article`")
 public class Article implements Serializable {
     @Id
+    @Column(name = "`articleId`")
     @GeneratedValue(generator = "JDBC")
     private Integer articleId;
 
     /**
      * 标题
      */
+    @Column(name = "`title`")
     private String title;
 
+    @Column(name = "`createTime`")
     private Date createTime;
 
+    @Column(name = "`creator`")
     private String creator;
 
+    @Column(name = "`isDelete`")
     private Boolean isDelete;
 
+    @Column(name = "`context`")
     private String context;
 
     private static final long serialVersionUID = 1L;
@@ -54,7 +60,7 @@ public class Article implements Serializable {
      * @param title 标题
      */
     public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
+        this.title = title;
     }
 
     /**
@@ -82,7 +88,7 @@ public class Article implements Serializable {
      * @param creator
      */
     public void setCreator(String creator) {
-        this.creator = creator == null ? null : creator.trim();
+        this.creator = creator;
     }
 
     /**
@@ -110,7 +116,7 @@ public class Article implements Serializable {
      * @param context
      */
     public void setContext(String context) {
-        this.context = context == null ? null : context.trim();
+        this.context = context;
     }
 
     @Override
