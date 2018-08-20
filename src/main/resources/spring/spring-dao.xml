@@ -2,18 +2,19 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd"
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd"
 >
 
-    <!--配置整合mybatis过程-->
-
-    <!--1、配置数据库相关参数-->
+    <!-- 配置数据库相关参数-->
     <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
 
-    <!--2.数据源druid -->
+    <!-- 数据源druid -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driver}"/>
@@ -31,7 +32,7 @@
     </bean>
 
 
-    <!--使用 Configuration 方式进行配置-->
+    <!-- 使用 Configuration 方式进行配置-->
     <bean id="mybatisConfig" class="tk.mybatis.mapper.session.Configuration">
 
         <!--自带的log，这里使用log4j-->
@@ -43,20 +44,36 @@
             <value>
                 safeDelete=true
                 checkExampleEntityClass=true
-                style=normal
+                <!--style=normal-->
             </value>
         </property>
 
     </bean>
 
 
-    <!--3、配置SqlSessionFactory对象-->
+    <!-- 配置SqlSessionFactory对象-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!--注入数据库连接池-->
         <property name="dataSource" ref="dataSource"/>
 
         <!--使用 configuration 后 就不能 使用 configLocation 了-->
         <property name="configuration" ref="mybatisConfig"/>
+
+        <!--分页插件-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <!-- 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 -->
+                    <property name="properties">
+                        <value>
+                            reasonable=true
+                            supportMethodsArguments=true
+                            autoRuntimeDialect=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
 
         <!--配置mybatis全局配置文件:mybatis-config.xml-->
         <!--<property name="configLocation" value="classpath:mybatis-config.xml"/>-->
@@ -68,13 +85,22 @@
 
     </bean>
 
-    <!--4、配置扫描Dao接口包,动态实现DAO接口,注入到spring容器-->
+    <!-- 配置扫描Dao接口包,动态实现DAO接口,注入到spring容器-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--注入SqlSessionFactory-->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <!-- 给出需要扫描的Dao接口-->
         <property name="basePackage" value="com.enreach.ssm.dao"/>
     </bean>
+
+
+    <!--配置事务管理器(mybatis采用的是JDBC的事务管理器)-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!--配置基于注解的声明式事务,默认使用注解来管理事务行为-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 
 </beans>

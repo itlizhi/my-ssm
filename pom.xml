@@ -9,14 +9,14 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>my ssm webApp</name>
+    <name>my ssm web</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -60,10 +60,14 @@
         <!-- 序列化 https://mvnrepository.com/artifact/com.dyuproject.protostuff/protostuff-runtime -->
         <dependency>
             <groupId>com.dyuproject.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dyuproject.protostuff</groupId>
             <artifactId>protostuff-runtime</artifactId>
             <version>1.1.3</version>
         </dependency>
-
 
         <!--endregion-->
 
@@ -152,15 +156,34 @@
             <version>4.0.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.1.4</version>
+        </dependency>
 
         <!--redis-->
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
-            <version>2.0.9.RELEASE</version>
+            <version>1.8.14.RELEASE</version>
         </dependency>
 
+        <!--endregion-->
 
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.3.7</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
@@ -177,7 +200,8 @@
 
                     <configuration>
                         <!--配置文件的路径 -->
-                        <configurationFile>${basedir}/src/main/resources/generator/mybatis-generator.xml</configurationFile>
+                        <configurationFile>${basedir}/src/main/resources/generator/mybatis-generator.xml
+                        </configurationFile>
                         <!-- 重复生成是否覆盖源文件 -->
                         <overwrite>true</overwrite>
                         <verbose>true</verbose>
@@ -191,7 +215,6 @@
                             <version>6.0.6</version>
                         </dependency>
 
-                        <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
                         <dependency>
                             <groupId>org.mybatis.generator</groupId>
                             <artifactId>mybatis-generator-core</artifactId>
@@ -204,16 +227,10 @@
                             <version>4.0.3</version>
                         </dependency>
 
-                        <dependency>
-                            <groupId>org.freemarker</groupId>
-                            <artifactId>freemarker</artifactId>
-                            <version>2.3.23</version>
-                        </dependency>
 
                     </dependencies>
 
                 </plugin>
-
 
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>

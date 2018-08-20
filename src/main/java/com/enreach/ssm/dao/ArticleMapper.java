@@ -1,8 +1,14 @@
 package com.enreach.ssm.dao;
 
 import com.enreach.ssm.entity.Article;
-import com.enreach.ssm.util.IMapper;
+import com.enreach.ssm.infrastructure.IMapper;
+
+import java.util.List;
 
 public interface ArticleMapper extends IMapper<Article> {
-    Article getOneById(int id);
+
+    List<Article> getPage();
+
 }
+
+

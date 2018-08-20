@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.enreach.ssm.dao.ArticleMapper">
-  <resultMap id="BaseResultMap" type="com.enreach.ssm.entity.Article">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="articleId" jdbcType="INTEGER" property="articleId" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="isDelete" jdbcType="BIT" property="isDelete" />
-    <result column="context" jdbcType="LONGVARCHAR" property="context" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.enreach.ssm.entity.Article">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="articleId" jdbcType="INTEGER" property="articleId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="creator" jdbcType="VARCHAR" property="creator"/>
+        <result column="isDelete" jdbcType="BIT" property="isDelete"/>
+        <result column="context" jdbcType="LONGVARCHAR" property="context"/>
+    </resultMap>
 
-    <select id="getOnebyId" resultMap="BaseResultMap">
-      select * from t_article where articleId=#{id}
+    <select id="getPage" resultMap="BaseResultMap">
+        select a.* from t_article as a
+        left join t_article as b on a.articleId= b.articleId
     </select>
 
 </mapper>

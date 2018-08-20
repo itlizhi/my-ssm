@@ -4,18 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "`t_article`")
-public class Article implements Serializable {
+@Table(name = "`t_article_tag`")
+public class ArticleTag implements Serializable {
     @Id
     @Column(name = "`articleId`")
-    @GeneratedValue(generator = "JDBC")
     private Integer articleId;
 
-    /**
-     * 标题
-     */
-    @Column(name = "`title`")
-    private String title;
+    @Id
+    @Column(name = "`tagId`")
+    private Integer tagId;
 
     @Column(name = "`createTime`")
     private Date createTime;
@@ -25,9 +22,6 @@ public class Article implements Serializable {
 
     @Column(name = "`isDelete`")
     private Boolean isDelete;
-
-    @Column(name = "`context`")
-    private String context;
 
     private static final long serialVersionUID = 1L;
 
@@ -46,21 +40,17 @@ public class Article implements Serializable {
     }
 
     /**
-     * 获取标题
-     *
-     * @return title - 标题
+     * @return tagId
      */
-    public String getTitle() {
-        return title;
+    public Integer getTagId() {
+        return tagId;
     }
 
     /**
-     * 设置标题
-     *
-     * @param title 标题
+     * @param tagId
      */
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
+    public void setTagId(Integer tagId) {
+        this.tagId = tagId;
     }
 
     /**
@@ -105,20 +95,6 @@ public class Article implements Serializable {
         this.isDelete = isDelete;
     }
 
-    /**
-     * @return context
-     */
-    public String getContext() {
-        return context;
-    }
-
-    /**
-     * @param context
-     */
-    public void setContext(String context) {
-        this.context = context == null ? null : context.trim();
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -126,11 +102,10 @@ public class Article implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", articleId=").append(articleId);
-        sb.append(", title=").append(title);
+        sb.append(", tagId=").append(tagId);
         sb.append(", createTime=").append(createTime);
         sb.append(", creator=").append(creator);
         sb.append(", isDelete=").append(isDelete);
-        sb.append(", context=").append(context);
         sb.append("]");
         return sb.toString();
     }

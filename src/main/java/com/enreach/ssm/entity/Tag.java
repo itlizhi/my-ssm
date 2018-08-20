@@ -4,18 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "`t_article`")
-public class Article implements Serializable {
+@Table(name = "`t_tag`")
+public class Tag implements Serializable {
     @Id
-    @Column(name = "`articleId`")
-    @GeneratedValue(generator = "JDBC")
-    private Integer articleId;
+    @Column(name = "`tagId`")
+    private Integer tagId;
 
-    /**
-     * 标题
-     */
-    @Column(name = "`title`")
-    private String title;
+    @Column(name = "`tagName`")
+    private String tagName;
 
     @Column(name = "`createTime`")
     private Date createTime;
@@ -26,41 +22,34 @@ public class Article implements Serializable {
     @Column(name = "`isDelete`")
     private Boolean isDelete;
 
-    @Column(name = "`context`")
-    private String context;
-
     private static final long serialVersionUID = 1L;
 
     /**
-     * @return articleId
+     * @return tagId
      */
-    public Integer getArticleId() {
-        return articleId;
+    public Integer getTagId() {
+        return tagId;
     }
 
     /**
-     * @param articleId
+     * @param tagId
      */
-    public void setArticleId(Integer articleId) {
-        this.articleId = articleId;
+    public void setTagId(Integer tagId) {
+        this.tagId = tagId;
     }
 
     /**
-     * 获取标题
-     *
-     * @return title - 标题
+     * @return tagName
      */
-    public String getTitle() {
-        return title;
+    public String getTagName() {
+        return tagName;
     }
 
     /**
-     * 设置标题
-     *
-     * @param title 标题
+     * @param tagName
      */
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
+    public void setTagName(String tagName) {
+        this.tagName = tagName == null ? null : tagName.trim();
     }
 
     /**
@@ -105,32 +94,17 @@ public class Article implements Serializable {
         this.isDelete = isDelete;
     }
 
-    /**
-     * @return context
-     */
-    public String getContext() {
-        return context;
-    }
-
-    /**
-     * @param context
-     */
-    public void setContext(String context) {
-        this.context = context == null ? null : context.trim();
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", articleId=").append(articleId);
-        sb.append(", title=").append(title);
+        sb.append(", tagId=").append(tagId);
+        sb.append(", tagName=").append(tagName);
         sb.append(", createTime=").append(createTime);
         sb.append(", creator=").append(creator);
         sb.append(", isDelete=").append(isDelete);
-        sb.append(", context=").append(context);
         sb.append("]");
         return sb.toString();
     }

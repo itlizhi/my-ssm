@@ -24,33 +24,24 @@
         <!--避免中文乱码-->
         <property name="javaFileEncoding" value="UTF-8"/>
 
-
-
-        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
-        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
-
-
-        <!--配置是否使用通用 Mapper 自带的注释扩展，默认 true-->
-        <!--<property name="useMapperCommentGenerator" value="false"/>-->
-
-        <!--通用 Mapper 插件，可以生成带注解的实体类-->
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="tk.mybatis.mapper.common.Mapper,tk.mybatis.mapper.hsqldb.HsqldbMapper"/>
+            <property name="mappers" value="com.enreach.ssm.infrastructure.IMapper"/>
             <property name="caseSensitive" value="true"/>
             <property name="forceAnnotation" value="true"/>
             <property name="beginningDelimiter" value="`"/>
             <property name="endingDelimiter" value="`"/>
         </plugin>
 
-        <!--通用代码生成器插件-->
-        <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
-            <property name="targetProject" value="src/main/java"/>
-            <property name="targetPackage" value="com.enreach.ssm.dao"/>
-            <property name="templatePath" value="generator/mapper.ftl"/>
-            <property name="mapperSuffix" value="Dao"/>
-            <property name="fileName" value="${tableClass.shortClassName}${mapperSuffix}.java"/>
-        </plugin>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
 
+        <!--region 核心设定-->
+
+        <commentGenerator>
+            <property name="suppressDate" value="false"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
 
         <!-- 数据库连接配置 -->
         <jdbcConnection driverClass="${jdbc.driver}"
@@ -65,24 +56,41 @@
 
         </jdbcConnection>
 
-
         <!-- java类型调整，此处并不强制使用BigDecimal -->
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <!--MyBatis 生成器只需要生成 Model-->
-        <javaModelGenerator targetPackage="com.enreach.ssm.entity" targetProject="src/main/java"/>
+        <!-- MyBatis 生成器只需要生成 Model -->
+        <javaModelGenerator targetPackage="com.enreach.ssm.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--从新运行会覆盖mampper，运行一次后建议注释-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.enreach.ssm.dao" targetProject="src/main/java">
+        </javaClientGenerator>
+
+        <!--endregion -->
 
         <!--region 表的配置 -->
+        <!--<table schema="my-blog" tableName="t_article">-->
+        <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--<generatedKey column="articleId" sqlStatement="JDBC" identity="true"/>-->
+        <!--<domainObjectRenamingRule searchString="^T" replaceString=""/>-->
+        <!--</table>-->
 
-        <table schema="my-blog" tableName="t_article">
+        <table schema="my-blog" tableName="t_tag" domainObjectName="Tag">
             <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="articleId" sqlStatement="JDBC" identity="true"/>
-            <domainObjectRenamingRule searchString="^T" replaceString=""/>
         </table>
 
-
+        <table schema="my-blog" tableName="t_article_tag" domainObjectName="ArticleTag">
+            <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
+        </table>
         <!--endregion-->
 
     </context>
