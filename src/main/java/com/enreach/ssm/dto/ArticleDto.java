@@ -43,7 +43,7 @@ public class ArticleDto {
 
     @Override
     public String toString() {
-        return "ArticleDao{" +
+        return "ArticleDto{" +
                 "title='" + title + '\'' +
                 ", context='" + context + '\'' +
                 ", tags=" + Arrays.toString(tags) +

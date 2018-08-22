@@ -85,11 +85,11 @@
 
         <table schema="my-blog" tableName="t_tag" domainObjectName="Tag">
             <property name="useActualColumnNames" value="true"/>
+            <generatedKey column="tagId" sqlStatement="JDBC" identity="true"/>
         </table>
 
         <table schema="my-blog" tableName="t_article_tag" domainObjectName="ArticleTag">
             <property name="useActualColumnNames" value="true"/>
-            <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>
         <!--endregion-->
 

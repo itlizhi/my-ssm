@@ -8,6 +8,7 @@ import javax.persistence.*;
 public class Tag implements Serializable {
     @Id
     @Column(name = "`tagId`")
+    @GeneratedValue(generator = "JDBC")
     private Integer tagId;
 
     @Column(name = "`tagName`")

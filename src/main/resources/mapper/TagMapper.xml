@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.enreach.ssm.dao.TagMapper">
-  <resultMap id="BaseResultMap" type="com.enreach.ssm.entity.Tag">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="tagId" jdbcType="INTEGER" property="tagId" />
-    <result column="tagName" jdbcType="VARCHAR" property="tagName" />
-    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="isDelete" jdbcType="BIT" property="isDelete" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.enreach.ssm.entity.Tag">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="tagId" jdbcType="INTEGER" property="tagId"/>
+        <result column="tagName" jdbcType="VARCHAR" property="tagName"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="creator" jdbcType="VARCHAR" property="creator"/>
+        <result column="isDelete" jdbcType="BIT" property="isDelete"/>
+    </resultMap>
+
+    <select id="getByName" resultMap="BaseResultMap">
+        SELECT *
+        FROM t_tag
+        WHERE tagName = #{name};
+    </select>
+
 </mapper>

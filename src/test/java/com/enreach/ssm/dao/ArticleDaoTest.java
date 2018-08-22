@@ -76,9 +76,8 @@ public class ArticleDaoTest {
         System.out.println(page.getList() == list);
         System.out.println(page.getTotal());
 
-        PageHelper.startPage(3, 2);
-        List articleList = articleMapper.getPage().stream().filter(p -> !p.getIsDelete() && p.getArticleId() > 1).collect(Collectors.toList());
-        System.out.println(articleList);
+        //自定义sql可以可以分页
+
 
     }
 

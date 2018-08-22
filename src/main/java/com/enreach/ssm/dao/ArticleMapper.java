@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface ArticleMapper extends IMapper<Article> {
 
-    List<Article> getPage();
-
 }
 
 

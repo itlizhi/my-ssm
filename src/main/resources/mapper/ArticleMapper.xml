@@ -13,9 +13,5 @@
         <result column="context" jdbcType="LONGVARCHAR" property="context"/>
     </resultMap>
 
-    <select id="getPage" resultMap="BaseResultMap">
-        select a.* from t_article as a
-        left join t_article as b on a.articleId= b.articleId
-    </select>
 
 </mapper>
