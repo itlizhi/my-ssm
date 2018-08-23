@@ -1,4 +1,4 @@
-package com.enreach.ssm.util;
+package com.enreach.ssm.utils;
 
 import java.util.Date;
 
@@ -9,6 +9,9 @@ public class SerializeTest {
 
     @Test
     public void serialize() {
+
+        int f= Integer.parseInt("123D");
+
 
         Article article = new Article();
         article.setArticleId(1);

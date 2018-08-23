@@ -1,6 +1,6 @@
 package com.enreach.ssm.infrastructure.cache;
 
-import com.enreach.ssm.util.SerializerUtil;
+import com.enreach.ssm.utils.SerializerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;

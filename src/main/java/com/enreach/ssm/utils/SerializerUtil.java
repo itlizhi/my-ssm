@@ -1,4 +1,4 @@
-package com.enreach.ssm.util;
+package com.enreach.ssm.utils;
 
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.Schema;

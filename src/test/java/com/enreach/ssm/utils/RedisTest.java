@@ -1,4 +1,4 @@
-package com.enreach.ssm.util;
+package com.enreach.ssm.utils;
 
 import com.enreach.ssm.infrastructure.cache.RedisCache;
 import org.junit.Test;
