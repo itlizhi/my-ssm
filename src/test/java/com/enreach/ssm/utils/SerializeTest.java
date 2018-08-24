@@ -10,9 +10,6 @@ public class SerializeTest {
     @Test
     public void serialize() {
 
-        int f= Integer.parseInt("123D");
-
-
         Article article = new Article();
         article.setArticleId(1);
         article.setTitle("title");

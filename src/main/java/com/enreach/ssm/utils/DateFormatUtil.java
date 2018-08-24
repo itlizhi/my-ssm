@@ -11,7 +11,6 @@ public class DateFormatUtil {
      */
     public static final String PATTERN_ISO = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ";
     public static final String PATTERN_ISO_YMD_HMS = "yyyy-MM-dd'T'HH:mm:ssZZ";
-    public static final String PATTERN_ISO_YMD = "yyyy-MM-dd";
 
     /**
      * 以空格分隔日期和时间，不带时区信息
@@ -28,7 +27,6 @@ public class DateFormatUtil {
      */
     public static final FastDateFormat ISO_FORMAT = FastDateFormat.getInstance(PATTERN_ISO);
     public static final FastDateFormat ISO_YMD_HMS_FORMAT = FastDateFormat.getInstance(PATTERN_ISO_YMD_HMS);
-    public static final FastDateFormat ISO_YMD_FORMAT = FastDateFormat.getInstance(PATTERN_ISO_YMD);
 
     /**
      * 以空格分隔日期和时间，不带时区信息

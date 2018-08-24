@@ -16,7 +16,7 @@ import java.util.List;
 public class SerializerUtil {
 
     /**
-     * 序列化对象
+     * 序列化对象,对象可不用实现 Serializable
      *
      * @param obj
      * @return

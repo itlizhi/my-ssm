@@ -29,7 +29,7 @@ public class RandomUtil {
     public static SecureRandom secureRandom() {
         try {
             return SecureRandom.getInstance("SHA1PRNG");
-        } catch (NoSuchAlgorithmException e) {// NOSONAR
+        } catch (NoSuchAlgorithmException e) {
             return new SecureRandom();
         }
     }
@@ -219,77 +219,93 @@ public class RandomUtil {
     /**
      * 随机字母或数字，固定长度
      */
-    public static String randomStringFixLength(int length) {
+    public static String randomString(int length) {
         return RandomStringUtils.random(length, 0, 0, true, true, null, threadLocalRandom());
     }
 
     /**
      * 随机字母或数字，固定长度
      */
-    public static String randomStringFixLength(Random random, int length) {
+    public static String randomString(Random random, int length) {
         return RandomStringUtils.random(length, 0, 0, true, true, null, random);
     }
 
     /**
      * 随机字母或数字，随机长度
      */
-    public static String randomStringRandomLength(int minLength, int maxLength) {
+    public static String randomString(int minLength, int maxLength) {
         return RandomStringUtils.random(nextInt(minLength, maxLength), 0, 0, true, true, null, threadLocalRandom());
     }
 
     /**
      * 随机字母或数字，随机长度
      */
-    public static String randomStringRandomLength(Random random, int minLength, int maxLength) {
+    public static String randomString(Random random, int minLength, int maxLength) {
         return RandomStringUtils.random(nextInt(random, minLength, maxLength), 0, 0, true, true, null, random);
     }
+
+
+    /**
+     * 随机数字，固定长度
+     */
+    public static String randomNumeric(int length) {
+        return RandomStringUtils.randomNumeric(length);
+    }
+
+    /**
+     * 随机数字，随机长度
+     */
+    public static String randomNumeric(int minLength, int maxLength) {
+        return RandomStringUtils.randomNumeric(minLength,maxLength);
+    }
+
 
     /**
      * 随机字母，固定长度
      */
-    public static String randomLetterFixLength(int length) {
+    public static String randomLetter(int length) {
         return RandomStringUtils.random(length, 0, 0, true, false, null, threadLocalRandom());
     }
 
     /**
      * 随机字母，固定长度
      */
-    public static String randomLetterFixLength(Random random, int length) {
+    public static String randomLetter(Random random, int length) {
         return RandomStringUtils.random(length, 0, 0, true, false, null, random);
     }
 
     /**
      * 随机字母，随机长度
      */
-    public static String randomLetterRandomLength(int minLength, int maxLength) {
+    public static String randomLetter(int minLength, int maxLength) {
         return RandomStringUtils.random(nextInt(minLength, maxLength), 0, 0, true, false, null, threadLocalRandom());
     }
 
     /**
      * 随机字母，随机长度
      */
-    public static String randomLetterRandomLength(Random random, int minLength, int maxLength) {
+    public static String randomLetter(Random random, int minLength, int maxLength) {
         return RandomStringUtils.random(nextInt(random, minLength, maxLength), 0, 0, true, false, null, random);
     }
 
     /**
      * 随机ASCII字符(含字母，数字及其他符号)，固定长度
      */
-    public static String randomAsciiFixLength(int length) {
+    public static String randomAscii(int length) {
         return RandomStringUtils.random(length, 32, 127, false, false, null, threadLocalRandom());
     }
 
     /**
      * 随机ASCII字符(含字母，数字及其他符号)，固定长度
      */
-    public static String randomAsciiFixLength(Random random, int length) {
+    public static String randomAscii(Random random, int length) {
         return RandomStringUtils.random(length, 32, 127, false, false, null, random);
     }
 
     /**
      * 随机ASCII字符(含字母，数字及其他符号)，随机长度
      */
-    public static String randomAsciiRandomLength(int minLength, int maxLength) {
+    public static String randomAscii(int minLength, int maxLength) {
         return RandomStringUtils.random(nextInt(minLength, maxLength), 32, 127, false, false, null,
                 threadLocalRandom());
     }
@@ -297,8 +313,10 @@ public class RandomUtil {
     /**
      * 随机ASCII字符(含字母，数字及其他符号)，随机长度
      */
-    public static String randomAsciiRandomLength(Random random, int minLength, int maxLength) {
+    public static String randomAscii(Random random, int minLength, int maxLength) {
         return RandomStringUtils.random(nextInt(random, minLength, maxLength), 32, 127, false, false, null, random);
     }
+
+
 
 }

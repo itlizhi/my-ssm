@@ -2,6 +2,9 @@ package com.enreach.ssm.utils;
 
 import java.math.BigDecimal;
 
+/**
+ * safe convert,避免 NullPointerException 和 NumberFormatException
+ */
 public class ConvertUtil {
 
     public static String toDef(Object str) {

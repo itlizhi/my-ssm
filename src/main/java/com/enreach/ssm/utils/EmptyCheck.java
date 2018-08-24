@@ -6,7 +6,7 @@ import java.util.Map;
 public class EmptyCheck {
 
     public static boolean isEmpty(String str) {
-        return str == null || str == "";
+        return str == null || str.trim().length() == 0;
     }
 
     public static boolean isEmpty(Collection<?> collection) {
