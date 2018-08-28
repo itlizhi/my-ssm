@@ -60,12 +60,12 @@ public class ResourceUtil {
     ////// 读取单个文件内容／／／／／
 
 
-    public static String toString(String resourceName) throws IOException {
+    public static String asString(String resourceName) throws IOException {
         return Resources.toString(Resources.getResource(resourceName), Charsets.UTF_8);
     }
 
 
-    public static String toString(Class<?> contextClass, String resourceName) throws IOException {
+    public static String asString(Class<?> contextClass, String resourceName) throws IOException {
         return Resources.toString(Resources.getResource(contextClass, resourceName), Charsets.UTF_8);
     }
 

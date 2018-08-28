@@ -1,0 +1,3 @@
+test.min=1
+test.max=10
+isOpen=true

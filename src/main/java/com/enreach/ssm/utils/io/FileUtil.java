@@ -43,10 +43,18 @@ public class FileUtil {
         return Files.readAllBytes(file.toPath());
     }
 
+
     /**
      * 读取文件到String.
      */
-    public static String toString(final File file) throws IOException {
+    public static String asString(final String fileName) throws IOException {
+        return com.google.common.io.Files.asCharSource(new File(fileName), Charsets.UTF_8).read();
+    }
+
+    /**
+     * 读取文件到String.
+     */
+    public static String asString(final File file) throws IOException {
         return com.google.common.io.Files.asCharSource(file, Charsets.UTF_8).read();
     }
 
@@ -118,8 +126,8 @@ public class FileUtil {
      *
      * @see {@link Files#newOutputStream}
      */
-    public static OutputStream asOututStream(String fileName) throws IOException {
-        return asOututStream(getPath(fileName));
+    public static OutputStream asOutputStream(String fileName) throws IOException {
+        return asOutputStream(getPath(fileName));
     }
 
     /**
@@ -127,9 +135,9 @@ public class FileUtil {
      *
      * @see {@link Files#newOutputStream}
      */
-    public static OutputStream asOututStream(File file) throws IOException {
+    public static OutputStream asOutputStream(File file) throws IOException {
         Validate.notNull(file, "file is null");
-        return asOututStream(file.toPath());
+        return asOutputStream(file.toPath());
     }
 
     /**
@@ -137,7 +145,7 @@ public class FileUtil {
      *
      * @see {@link Files#newOutputStream}
      */
-    public static OutputStream asOututStream(Path path) throws IOException {
+    public static OutputStream asOutputStream(Path path) throws IOException {
         Validate.notNull(path, "path is null");
         return Files.newOutputStream(path);
     }
@@ -256,6 +264,19 @@ public class FileUtil {
 //#endregion
 
     //#region 文件操作
+
+    public static File newFile(String filePath) throws IOException {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        return file;
+    }
+
+    public static File newFile(String path, String fileName) throws IOException {
+        String filePath = concat(path, fileName);
+        return newFile(filePath);
+    }
 
     /**
      * 复制文件或目录, not following links.

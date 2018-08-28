@@ -5,7 +5,9 @@ import org.junit.Test;
 import javax.sound.midi.Soundbank;
 import java.text.ParseException;
 import java.time.*;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +25,11 @@ public class DateTest {
 
         System.out.println(DateFormatUtil.parseDate(DateFormatUtil.PATTERN_DEFAULT_YMD_HMS, "2018-1-1 2:10:11"));
         System.out.println(DateFormatUtil.parseDate(DateFormatUtil.PATTERN_DEFAULT_YMD, "2018-1-1"));
+
+        Calendar calendar=new GregorianCalendar(1991,10,18,23,12);
+
+        System.out.println( calendar);
+        System.out.println(DateFormatUtil.DEFAULT_YMD_HMS_FORMAT.format(calendar.getTime()));
     }
 
     @Test

@@ -41,7 +41,7 @@ public class Platforms {
      */
     public static final String USER_HOME = SystemUtils.USER_HOME;
     /**
-     * ava HOME目录
+     * java HOME目录
      */
     public static final String JAVA_HOME = SystemUtils.JAVA_HOME;
 

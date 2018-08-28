@@ -8,7 +8,7 @@ public class ConvertTest {
     public void toDef() {
 
         System.out.println(ConvertUtil.toDef("abc"));
-        Object object = null;
+        String object = null;
         System.out.println(ConvertUtil.toDef(object));
 
         Float f = null;
