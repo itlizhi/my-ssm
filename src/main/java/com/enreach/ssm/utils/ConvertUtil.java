@@ -7,11 +7,11 @@ import java.math.BigDecimal;
  */
 public class ConvertUtil {
 
-    public static String toDef(Object str) {
+    public static String toDef(String str) {
         if (str == null) {
             return "";
         }
-        return (String) str;
+        return str;
     }
 
     public static int toDef(Integer value) {
@@ -36,57 +36,101 @@ public class ConvertUtil {
 
 
     public static int toInt(Object obj) {
+        return toInt(obj, 0);
+    }
+
+    public static int toInt(Object obj, int def) {
         if (obj == null) {
-            return 0;
+            return def;
         }
         try {
-            return Integer.parseInt(toDef(obj));
+            return Integer.parseInt(String.valueOf(obj));
         } catch (NumberFormatException ex) {
-            return 0;
+            return def;
         }
     }
 
     public static long toBigInt(Object obj) {
+        return toBigInt(obj, 0L);
+    }
+
+    public static long toBigInt(Object obj, long def) {
         if (obj == null) {
-            return 0L;
+            return def;
         }
         try {
-            return Long.parseLong(toDef(obj));
+            return Long.parseLong(String.valueOf(obj));
         } catch (NumberFormatException ex) {
-            return 0L;
+            return def;
         }
     }
 
     public static float toFloat(Object obj) {
+        return toFloat(obj, 0f);
+    }
+
+    public static float toFloat(Object obj, float def) {
         if (obj == null) {
-            return 0f;
+            return def;
         }
         try {
-            return Float.parseFloat(toDef(obj));
+            return Float.parseFloat(String.valueOf(obj));
         } catch (NumberFormatException ex) {
-            return 0f;
+            return def;
         }
     }
+
 
     public static double toDouble(Object obj) {
+        return toDouble(obj, 0d);
+    }
+
+    public static double toDouble(Object obj, double def) {
         if (obj == null) {
-            return 0d;
+            return def;
         }
         try {
-            return Double.parseDouble(toDef(obj));
+            return Double.parseDouble(String.valueOf(obj));
         } catch (NumberFormatException ex) {
-            return 0d;
+            return def;
         }
     }
 
+
     public static BigDecimal toDecimal(Object obj) {
+        return toDecimal(obj, BigDecimal.valueOf(0));
+    }
+
+    public static BigDecimal toDecimal(Object obj, BigDecimal def) {
         if (obj == null) {
-            return BigDecimal.valueOf(0);
+            return def;
         }
         try {
-            return new BigDecimal(toDef(obj));
+            return new BigDecimal(String.valueOf(obj));
         } catch (NumberFormatException ex) {
-            return BigDecimal.valueOf(0);
+            return def;
+        }
+    }
+
+    public static boolean toBoolean(Object obj) {
+        return  toBoolean(obj,false);
+    }
+
+    public static boolean toBoolean(Object obj, boolean def) {
+        if (obj == null) {
+            return def;
+        }
+        String value = String.valueOf(obj).toLowerCase();
+        switch (value) {
+            case "1":
+            case "true":
+                return true;
+            case "0":
+            case "false":
+                return false;
+            default:
+                return def;
+
         }
     }
 
