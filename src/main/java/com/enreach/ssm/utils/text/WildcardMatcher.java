@@ -129,8 +129,6 @@ public class WildcardMatcher {
 
     /**
      * Matches path to at least one pattern. Returns index of matched pattern or <code>-1</code> otherwise.
-     *
-     * @see #matchPath(String, String, char)
      */
     public static int matchPathOne(String platformDependentPath, String... patterns) {
         for (int i = 0; i < patterns.length; i++) {

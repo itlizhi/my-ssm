@@ -1,6 +1,10 @@
 package com.enreach.ssm.dto;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.util.Arrays;
+import java.util.Objects;
 
 public class ArticleDto {
 
@@ -39,6 +43,32 @@ public class ArticleDto {
 
     public void setCreator(String creator) {
         this.creator = creator;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof ArticleDto)) return false;
+
+        ArticleDto dto = (ArticleDto) o;
+
+        return new EqualsBuilder()
+                .append(title, dto.title)
+                .append(context, dto.context)
+                .append(tags, dto.tags)
+                .append(creator, dto.creator)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(title)
+                .append(context)
+                .append(tags)
+                .append(creator)
+                .toHashCode();
     }
 
     @Override
