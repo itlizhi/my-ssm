@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--输入参数忽略大小写-->
+    <bean id="caseInsensitiveRequestFilterProxy" class="org.springframework.web.filter.DelegatingFilterProxy">
+        <property name="targetBeanName" value="caseInsensitiveRequestFilter"/>
+    </bean>
+    <bean id="caseInsensitiveRequestFilter"
+          class="com.enreach.ssm.filter.CaseInsensitiveRequestParameterNameFilter">
+    </bean>
+
+    <!--简化配置:
+ 1、自动注册DefaultAnnotationHandlerMapping,AnnotationMethodHandlerAdapter
+ 2、提供一系列:数据绑定,数字和日期的format,@NumberFormat,@DataTimeFormat,xml,json默认读写支持
+-->
+    <mvc:annotation-driven>
+        <!-- 字符串转换和对象转换用的是两个转换器； 解决返回string时候 中文乱码 问题，也可以用 produces="text/html;charset=UTF-8"-->
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--静态资源默认servlet配置
+    	1、加入对静态资源的处理:js,css,gif,png
+    	2、允许使用"/"做整体映射
+    -->
+    <mvc:default-servlet-handler/>
+
+
+    <!-- 激活组件扫描功能,扫描 controller 和 aop的相关组件组件 -->
+    <context:component-scan base-package="com.enreach.ssm.web"/>
+
+    <!-- 启动对@AspectJ注解的支持 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+</beans>

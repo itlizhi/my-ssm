@@ -1,9 +1,8 @@
 package com.enreach.ssm.utils;
 
-import com.enreach.ssm.dto.ArticleDto;
+import com.enreach.ssm.pojo.dto.ArticleDto;
 import com.enreach.ssm.entity.Article;
 import com.enreach.ssm.infrastructure.BizException;
-import com.enreach.ssm.utils.concurrent.ThreadUtil;
 import com.google.common.base.*;
 import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
@@ -11,7 +10,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.*;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,7 +40,7 @@ public class GuavaTest {
         Preconditions.checkNotNull(value, "不能为null");
 
         try {
-            Preconditions.checkArgument(CheckEmpty.isNotEmpty(""), "不能为空");
+            Preconditions.checkArgument(CheckUtil.isNotEmpty(""), "不能为空");
         } catch (Throwable t) {
             System.out.println(Throwables.getStackTraceAsString(t));
             Throwables.propagateIfPossible(t, IllegalArgumentException.class);

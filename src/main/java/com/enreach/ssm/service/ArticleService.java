@@ -1,6 +1,9 @@
 package com.enreach.ssm.service;
 
-import com.enreach.ssm.dto.ArticleDto;
+import com.enreach.ssm.pojo.dto.ArticleDto;
+import com.enreach.ssm.pojo.vo.ArticleVO;
+
+import java.util.List;
 
 public interface ArticleService {
 
@@ -11,5 +14,20 @@ public interface ArticleService {
      * @return
      */
     int add(ArticleDto dto);
+
+    /**
+     * detail
+     * @param id
+     * @return
+     */
+    ArticleVO detail(int id);
+
+    /**
+     * list
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    List<ArticleVO> list(int pageNum, int pageSize);
 
 }

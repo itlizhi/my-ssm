@@ -1,15 +1,21 @@
-package com.enreach.ssm.dto;
+package com.enreach.ssm.pojo.dto;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class ArticleDto {
 
+    @NotEmpty
     private String title;
+
+    @NotEmpty
     private String context;
+
+    @NotNull(message = "{ssm.validator.tags}")
     private String[] tags;
     private String creator;
 

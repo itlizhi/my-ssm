@@ -26,7 +26,7 @@
     <!--注册别名，将类名作为别名-->
     <typeAliases>
         <package name="com.enreach.ssm.entity"/>
-        <package name="com.enreach.ssm.dto"/>
+        <package name="com.enreach.ssm.pojo.dto"/>
     </typeAliases>
 
 </configuration>

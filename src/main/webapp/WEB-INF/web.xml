@@ -9,6 +9,37 @@
 
     <display-name>ssm</display-name>
 
+    <!--utf-8 字符集 解决中文乱码-->
+    <filter>
+        <filter-name>utf8EncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>utf8EncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!--end utf-8-->
+
+    <!--参数忽略大小写-->
+    <filter>
+        <filter-name>caseInsensitiveRequestFilterProxy</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>caseInsensitiveRequestFilterProxy</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
     <!--配置DispatcherServlet -->
     <servlet>
         <servlet-name>spring-dispatcher</servlet-name>
@@ -25,6 +56,7 @@
         <!--默认匹配所有的请求 -->
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
 
     <!-- druid -->
     <servlet>
@@ -48,5 +80,8 @@
         <filter-name>DruidWebStatFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+
+
 
 </web-app>

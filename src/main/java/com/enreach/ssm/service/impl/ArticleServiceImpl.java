@@ -5,10 +5,11 @@ import java.util.Date;
 import com.enreach.ssm.dao.ArticleMapper;
 import com.enreach.ssm.dao.ArticleTagMapper;
 import com.enreach.ssm.dao.TagMapper;
-import com.enreach.ssm.dto.ArticleDto;
+import com.enreach.ssm.pojo.dto.ArticleDto;
 import com.enreach.ssm.entity.Article;
 import com.enreach.ssm.entity.ArticleTag;
 import com.enreach.ssm.entity.Tag;
+import com.enreach.ssm.pojo.vo.ArticleVO;
 import com.enreach.ssm.service.ArticleService;
 import com.enreach.ssm.infrastructure.BizException;
 import org.apache.commons.lang3.StringUtils;
@@ -82,5 +83,23 @@ public class ArticleServiceImpl implements ArticleService {
         LOG.debug(article.toString());
 
         return article.getArticleId();
+    }
+
+    @Override
+    public ArticleVO detail(int id) {
+
+        Article article = articleMapper.selectByPrimaryKey(id);
+        if (article == null) {
+            return null;
+        }
+        ModelMapper modelMapper = new ModelMapper();
+        ArticleVO vo = modelMapper.map(article, ArticleVO.class);
+        return vo;
+    }
+
+    @Override
+    public List<ArticleVO> list(int pageNum, int pageSize) {
+
+        return null;
     }
 }
