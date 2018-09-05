@@ -15,6 +15,17 @@ public class JsonUtil {
      * 序列化对象
      *
      * @param object
+     * @return
+     * @throws JsonProcessingException
+     */
+    public static String serialize(Object object) throws JsonProcessingException {
+        return serialize(object,false);
+    }
+
+    /**
+     * 序列化对象
+     *
+     * @param object
      * @param formatDate false：时间返回时间戳，true:format yyyy-MM-dd'T'HH:mm:ss.SSSZ
      * @return
      * @throws JsonProcessingException

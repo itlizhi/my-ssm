@@ -16,7 +16,7 @@
         <property name="targetBeanName" value="caseInsensitiveRequestFilter"/>
     </bean>
     <bean id="caseInsensitiveRequestFilter"
-          class="com.enreach.ssm.filter.CaseInsensitiveRequestParameterNameFilter">
+          class="com.enreach.ssm.filter.CaseInsensitiveFilter">
     </bean>
 
     <!--简化配置:
@@ -38,9 +38,8 @@
     -->
     <mvc:default-servlet-handler/>
 
-
     <!-- 激活组件扫描功能,扫描 controller 和 aop的相关组件组件 -->
-    <context:component-scan base-package="com.enreach.ssm.web"/>
+    <context:component-scan base-package="com.enreach.ssm.web,com.enreach.ssm.filter"/>
 
     <!-- 启动对@AspectJ注解的支持 -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>

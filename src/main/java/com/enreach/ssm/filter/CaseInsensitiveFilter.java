@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * 参数不区分大小写
  */
-public class CaseInsensitiveRequestParameterNameFilter extends OncePerRequestFilter {
+public class CaseInsensitiveFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

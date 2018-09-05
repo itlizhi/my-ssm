@@ -1,17 +1,18 @@
-package com.enreach.ssm.pojo.enums;
+package com.enreach.ssm.infrastructure;
 
 public enum ErrorEnum {
 
     INNER_ERROR(500, "InternalServerError"),
-    REQUEST_ERROR(401, "bad request"),
-    UNAUTHORIZED(301, "unauthorized"),
+    REQUEST_ERROR(400, "bad request"),
+    UNAUTHORIZED(401, "unauthorized"),
 
     /**
      * 在下面定义错误code
      */
 
-    DB_ERROR(9000, "db error");
+    DB_ERROR(9000, "db error"),
 
+    MODEL_STATE_ERROR(8999, "参数错误");
 
     private int state;
 

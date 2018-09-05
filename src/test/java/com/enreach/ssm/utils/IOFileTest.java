@@ -16,6 +16,17 @@ import static org.assertj.core.api.Assertions.*;
 
 public class IOFileTest {
 
+    @Test
+    public void platforms() {
+
+        System.out.println(Platforms.TMP_DIR);
+        System.out.println(Platforms.WORKING_DIR);
+        System.out.println(Platforms.USER_HOME);
+        System.out.println(Platforms.JAVA_HOME);
+        System.out.println(System.getProperty("catalina.base"));
+
+    }
+
     /**
      * 配置文件读取
      */
@@ -63,10 +74,6 @@ public class IOFileTest {
         //System.out.println(path);
         //FileUtil.append("abc", path.toFile());
 
-        System.out.println(Platforms.TMP_DIR);
-        System.out.println(Platforms.WORKING_DIR);
-        System.out.println(Platforms.USER_HOME);
-        System.out.println(Platforms.JAVA_HOME);
 
         FileUtil.makesureDirExists("d:\\ssm-tmp");
 
@@ -88,9 +95,9 @@ public class IOFileTest {
 
         System.out.println(IOUtil.toString(ResourceUtil.asStream("inline/test.txt")));
 
-        OutputStream out =new ByteArrayOutputStream();
+        OutputStream out = new ByteArrayOutputStream();
 
-        IOUtil.write("line-abc",out);
+        IOUtil.write("line-abc", out);
 
         System.out.println(out.toString());
 
