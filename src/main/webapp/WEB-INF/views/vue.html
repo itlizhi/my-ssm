@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Vue Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script src="/static/plugins/vue.js"></script>
+    <script src="/static/plugins/axios.js"></script>
+    <script src="/static/plugins/element/index.js"></script>
+    <link rel="stylesheet" href="/static/plugins/element/index.css">
+
+    <!--自定义-->
+    <script src="/static/js/fetch.js"></script>
+
+</head>
+<body>
+<div id="user" style="width: 400px">
+
+    <el-form ref="form" :model="form" size="medium" label-width="80px">
+        <el-form-item label="名称">
+            <el-input v-model="form.title"></el-input>
+        </el-form-item>
+        <el-form-item label="创建时间">
+            <el-date-picker type="datetime" placeholder="选择日期" v-model="form.createTime"></el-date-picker>
+        </el-form-item>
+    </el-form>
+
+</div>
+
+<div id="table"></div>
+
+<script type="text/javascript" th:inline="javascript">
+    var article = [[${article}]];
+
+    var user = new Vue({
+        el: "#user",
+        data() {
+            return {form: article}
+        },
+        mounted: function () {
+        },
+        methods: {}
+    })
+
+    var table = new Vue({
+        el: "#table",
+        data() {
+            return {
+                loading: false,
+                tableData: [],
+                checkedRows: [], //选择的行
+                pageCurrent: 1,
+                pageSize: 20,
+                total: 20 // 总条数
+            }
+        },
+        mounted: function () {
+            this.query();
+        },
+        methods: {
+            handleSelectionChange(val) {
+                this.checkedRows = val;
+            },
+            handleSizeChange(val) {
+                this.pageSize = val;
+                this.query(true);
+            },
+            handleCurrentChange(val) {
+                this.pageCurrent = val;
+                this.query();
+            },
+            query(renew) {
+                this.loading = true;
+                var query = {};
+                query.pageNum = this.pageCurrent;
+                query.pageSize = this.pageSize;
+
+                if (renew) {
+                    query.pageCurrent = 1;
+                }
+
+                var that = this;
+
+                Axios.get("/blog/list", {
+                    params: query
+                }).then(function (res) {
+                    console.log(res);
+                    that.loading = false;
+                    that.tableData = res.items;
+                    that.total = res.totalItem;
+                    that.pageSize = res.pageSize;
+                    that.pageCurrent = res.pageCurrent;
+                }).catch(function () {
+                    that.loading = false;
+                })
+
+            }
+
+        }
+    })
+
+
+</script>
+
+</body>
+</html>

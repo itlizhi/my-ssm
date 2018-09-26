@@ -42,7 +42,8 @@ public class GlobalExceptionFilter implements HandlerExceptionResolver {
                     code = bizException.getErrorEnum().getState();
                 }
                 errorResult = new ErrorResult(code, ex.getMessage(), bizException.getData());
-            } else { //未处理错误
+            } else {
+                //系统未处理错误
                 response.setStatus(500);
                 errorResult = new ErrorResult(500, "系统错误", null);
                 LOG.error("访问:" + request.getRequestURI() + " 发生错误, 错误信息:" + ex.getMessage());
@@ -50,7 +51,7 @@ public class GlobalExceptionFilter implements HandlerExceptionResolver {
             }
             writer.write(JsonUtil.serialize(errorResult));
             writer.flush();
-            writer.close();
+            writer.close();//必须close，不然client不会得到response数据
 
         } catch (Exception e) {
             LOG.error("GlobalExceptionFilter：", e);

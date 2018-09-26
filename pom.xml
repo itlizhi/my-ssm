@@ -98,7 +98,6 @@
             <version>2.2.0</version>
         </dependency>
 
-
         <!--endregion-->
 
         <!-- region spring core -->
@@ -207,6 +206,14 @@
         </dependency>
 
         <!--endregion-->
+
+        <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring4 -->
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring4</artifactId>
+            <version>3.0.9.RELEASE</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.mybatis.generator</groupId>

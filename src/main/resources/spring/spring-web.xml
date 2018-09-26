@@ -11,6 +11,39 @@
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+
+    <!-- Thymeleaf视图模板引擎配置 -->
+    <bean id="templateResolver"
+          class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".html"/>
+        <property name="characterEncoding" value="UTF-8"/>
+        <!-- HTML是默认值, 为了清楚起见, 在此处添加。 -->
+        <property name="templateMode" value="HTML"/>
+        <!-- 默认情况下, 模板缓存为true。如果您想要设置为false -->
+        <!-- 模板在修改时自动更新。 -->
+        <property name="cacheable" value="true"/>
+    </bean>
+
+    <!-- SpringTemplateEngine自动应用SpringStandardDialect并 -->
+    <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver"/>
+        <!-- 使用Spring 4.2.4或更高版本启用Spring EL编译器 -->
+        <!-- 可以加快大多数情况下的执行速度, 但是当一个模板中 -->
+        <!-- 的表达式在不同数据类型之间重用时, -->
+        <!-- 可能与特定情况不兼容, 因此该标志默认为“false” -->
+        <!-- 以实现更安全的向后兼容性。 -->
+        <property name="enableSpringELCompiler" value="true"/>
+    </bean>
+    <!-- 视图解析器配置 -->
+    <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine"/>
+        <property name="characterEncoding" value="UTF-8"/>
+        <property name="order" value="1"/>
+        <!-- <property name="viewNames" value="*.html,*.xhtml" /> -->
+    </bean>
+
+
     <!--输入参数忽略大小写-->
     <bean id="caseInsensitiveRequestFilterProxy" class="org.springframework.web.filter.DelegatingFilterProxy">
         <property name="targetBeanName" value="caseInsensitiveRequestFilter"/>
@@ -20,9 +53,9 @@
     </bean>
 
     <!--简化配置:
- 1、自动注册DefaultAnnotationHandlerMapping,AnnotationMethodHandlerAdapter
- 2、提供一系列:数据绑定,数字和日期的format,@NumberFormat,@DataTimeFormat,xml,json默认读写支持
--->
+     1、自动注册DefaultAnnotationHandlerMapping,AnnotationMethodHandlerAdapter
+     2、提供一系列:数据绑定,数字和日期的format,@NumberFormat,@DataTimeFormat,xml,json默认读写支持
+    -->
     <mvc:annotation-driven>
         <!-- 字符串转换和对象转换用的是两个转换器； 解决返回string时候 中文乱码 问题，也可以用 produces="text/html;charset=UTF-8"-->
         <mvc:message-converters register-defaults="true">
@@ -43,5 +76,15 @@
 
     <!-- 启动对@AspectJ注解的支持 -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+
+    <!--指定message  basename，默认 messages.properties-->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <array>
+                <value>ValidationMessages</value>
+            </array>
+        </property>
+    </bean>
 
 </beans>

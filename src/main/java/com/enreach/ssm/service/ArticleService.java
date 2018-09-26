@@ -1,5 +1,6 @@
 package com.enreach.ssm.service;
 
+import com.enreach.ssm.infrastructure.PagedList;
 import com.enreach.ssm.pojo.dto.ArticleDto;
 import com.enreach.ssm.pojo.vo.ArticleVO;
 
@@ -28,6 +29,6 @@ public interface ArticleService {
      * @param pageSize
      * @return
      */
-    List<ArticleVO> list(int pageNum, int pageSize);
+    PagedList<ArticleVO> list(int pageNum, int pageSize);
 
 }

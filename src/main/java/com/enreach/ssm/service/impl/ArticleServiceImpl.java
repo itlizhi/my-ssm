@@ -1,10 +1,12 @@
 package com.enreach.ssm.service.impl;
 
+import java.lang.reflect.Type;
 import java.util.Date;
 
 import com.enreach.ssm.dao.ArticleMapper;
 import com.enreach.ssm.dao.ArticleTagMapper;
 import com.enreach.ssm.dao.TagMapper;
+import com.enreach.ssm.infrastructure.PagedList;
 import com.enreach.ssm.pojo.dto.ArticleDto;
 import com.enreach.ssm.entity.Article;
 import com.enreach.ssm.entity.ArticleTag;
@@ -12,8 +14,11 @@ import com.enreach.ssm.entity.Tag;
 import com.enreach.ssm.pojo.vo.ArticleVO;
 import com.enreach.ssm.service.ArticleService;
 import com.enreach.ssm.infrastructure.BizException;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +63,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         ModelMapper modelMapper = new ModelMapper();
         Article article = modelMapper.map(dto, Article.class);
-        article.setCreateTime(new Date());
+        article.setCreateTime(dto.getCreateTime());
         article.setCreator("lizhi");
 
         articleMapper.insertSelective(article);
@@ -76,7 +81,7 @@ public class ArticleServiceImpl implements ArticleService {
             ArticleTag articleTag = new ArticleTag();
             articleTag.setArticleId(article.getArticleId());
             articleTag.setTagId(tag.getTagId());
-            articleTag.setCreateTime(new Date());
+            articleTag.setCreateTime(dto.getCreateTime());
             articleTag.setCreator("lizhi");
             articleTagMapper.insertSelective(articleTag);
         }
@@ -99,8 +104,19 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleVO> list(int pageNum, int pageSize) {
+    public PagedList<ArticleVO> list(int pageNum, int pageSize) {
 
-        return null;
+        Type listType = new TypeToken<List<ArticleDto>>() {
+        }.getType();
+
+        PageHelper.startPage(pageNum, pageSize);
+        List<Article> list = articleMapper.selectAll();
+        PageInfo pageInfo = new PageInfo(list);
+
+        PagedList<ArticleVO> pagedList = new PagedList<>(pageInfo.getPageSize(),
+                pageInfo.getPageNum(),
+                pageInfo.getTotal(),
+                new ModelMapper().map(list, listType));
+        return pagedList;
     }
 }

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Index Page</title>
+</head>
+<body>
+<!--<img width="200" src="/static/img/001.jpg">-->
+<div>文字内容</div>
+<p th:text="${message}">覆盖原内容</p>
+
+<div th:object="${article}">
+    <p th:text="${article.getTitle()}"></p>
+    <p th:text="*{getContext()}"></p>
+</div>
+
+<!--需要配置basename-->
+<p th:text="#{ssm.validator.tags}"></p>
+
+<p th:text="@{/css/mian.css(v=1.0,b=2.0)}"></p>
+<p th:text="@{~/img/{t}/info(t=${article.getTitle()})}"></p>
+
+<!--自定义属性-->
+<div th:item-id="12">自定义属性</div>
+
+<!--模板-->
+<!--<div th:insert="header"></div>-->
+<div th:replace="~{header :: header2}"></div>
+
+<!--内置对象-->
+<p th:text="${#ctx.getLocale()}"></p>
+<p th:text="${#ctx.getVariable('message')}"></p>
+<p th:text="${#request.requestURL}"></p>
+<p th:text="${#response.status}"></p>
+
+<p th:text="${#dates.format(time, 'yyyy-MM-dd HH:mm:ss')}"></p>
+
+<!--运算-->
+<p th:text="2017 + 1"></p>
+<p th:text="1 > 2 ? '是' : '否'"></p>
+<p th:text="${message == null}"></p>
+
+<p th:text="'Welcome to ' + ${message} + '!'"></p>
+<!--text 转义 html标签，utext不转义-->
+<p th:text="${true and false}"></p>
+<p th:text="${true or false}"></p>
+
+<button class="abc" th:attrappend="class= ${bool} ? ' enable' : ' disable'">购买www</button>
+
+<input type="checkbox" name="rememberme" th:checked="${bool}"/> 记住我
+
+<!--遍历-->
+<p>
+    <!--status 是个对象-->
+    <select name="mycity">
+        <option th:each="item, status : ${array}" th:text="'-----' + ${item} +' --------'"
+                th:item-index="${status}"></option>
+    </select>
+</p>
+
+<!--if 表达式类似为 js -->
+<p th:if="${bool}">是否显示</p>
+<p th:if="0">是否显示 1</p>
+<p th:if="1">是否显示 1</p>
+
+<!-- 解析器级注释-->
+<!--/*-->
+<p>这个不会被输出</p>
+<!--*/-->
+
+<!--内联表达式-->
+<p>The message is : [[${message}]]</p>
+<p>The message is : [(${message})]</p>
+
+
+<!--th:inline="javascript"-->
+<script type="text/javascript" th:inline="javascript">
+    var article = [[${article}]];
+    console.log(article);
+
+
+
+</script>
+
+</body>
+</html>

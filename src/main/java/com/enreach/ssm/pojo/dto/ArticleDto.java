@@ -1,12 +1,15 @@
 package com.enreach.ssm.pojo.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
+import java.util.Date;
 
 public class ArticleDto {
 
@@ -16,9 +19,23 @@ public class ArticleDto {
     @NotEmpty
     private String context;
 
+    /**
+     * 使用properties文件名必须是 ValidationMessages.properties
+     */
     @NotNull(message = "{ssm.validator.tags}")
     private String[] tags;
     private String creator;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date createTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     public String getTitle() {
         return title;
@@ -85,6 +102,7 @@ public class ArticleDto {
                 ", context='" + context + '\'' +
                 ", tags=" + Arrays.toString(tags) +
                 ", creator='" + creator + '\'' +
+                ", createTime=" + createTime +
                 '}';
     }
 }
